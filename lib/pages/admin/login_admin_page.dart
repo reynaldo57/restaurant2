@@ -1,12 +1,11 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant2/pages/home_admin_page.dart';
+import 'package:restaurant2/pages/admin/home_admin_page.dart';
+import 'package:restaurant2/pages/admin/register_admin_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginAdminPage extends StatefulWidget {
-
   @override
   State<LoginAdminPage> createState() => _LoginAdminPageState();
 }
@@ -14,26 +13,27 @@ class LoginAdminPage extends StatefulWidget {
 class _LoginAdminPageState extends State<LoginAdminPage> {
   final _formKey = GlobalKey<FormState>();
 
-  signOut() async{
+  signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
-
-
   signInEmailPassword() async {
-    try{
+    try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: "mandarina@gmail.com",
         password: "elpatriota20",
       );
       //print("DATA AUTH::: ${await userCredential.user!.getIdToken()}");
       print("DATA AUTH::: ${userCredential.user}");
 
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeAdminPage()), (route) => false);
-
-    } on FirebaseAuthException catch (e){
-      if(e.code == "user-not-found"){
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeAdminPage()),
+          (route) => false);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -42,7 +42,7 @@ class _LoginAdminPageState extends State<LoginAdminPage> {
             backgroundColor: Colors.redAccent,
           ),
         );
-      }else if(e.code == "wrong-password"){
+      } else if (e.code == "wrong-password") {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -59,86 +59,83 @@ class _LoginAdminPageState extends State<LoginAdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 60.0,
-                    ),
-                    Text(
-                      "Iniciar Sesion",
-                      style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: "Correo electronico",
-                        hintText: "Correo Electronico",
-                      ),
-                      validator: (String? value){
-                        if(value!.isEmpty || value == null){
-                          return "El Campo es Obligatorio";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 14.0,
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "Contraseña",
-                        hintText: "Contraseña",
-                      ),
-                      validator: (String? value){
-                        if(value!.isEmpty || value == null){
-                          return "El Campo es Obligatorio";
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 40.0,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 50.0,
-                      child: ElevatedButton(
-                        onPressed: (){
-                          // if(_formKey.currentState!.validate()){
-                          //
-                          // }
-                          signInEmailPassword();
-                        },
-                        child: Text(
-                          "Iniciar Sesion",
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-
-                    TextButton(onPressed: (){
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterAdminPage()));
-                    }, child: Text("Registrar"),),
-
-                  ],
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60.0,
                 ),
-              ),
+                Text(
+                  "Iniciar Sesion",
+                  style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: "Correo electronico",
+                    hintText: "Correo Electronico",
+                  ),
+                  validator: (String? value) {
+                    if (value!.isEmpty || value == null) {
+                      return "El Campo es Obligatorio";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 14.0,
+                ),
+                TextFormField(
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: "Contraseña",
+                    hintText: "Contraseña",
+                  ),
+                  validator: (String? value) {
+                    if (value!.isEmpty || value == null) {
+                      return "El Campo es Obligatorio";
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 40.0,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 50.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // if(_formKey.currentState!.validate()){
+                      //
+                      // }
+                      signInEmailPassword();
+                    },
+                    child: Text(
+                      "Iniciar Sesion",
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterAdminPage()));
+                  },
+                  child: Text("Registrar"),
+                ),
+              ],
             ),
           ),
-        )
-    );
+        ),
+      ),
+    ));
   }
 }
