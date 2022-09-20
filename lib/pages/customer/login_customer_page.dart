@@ -11,28 +11,35 @@ class LoginCustomerPage extends StatefulWidget {
 
 class _LoginCustomerPageState extends State<LoginCustomerPage> {
 
+  GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+
   signOut() async{
-    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
     googleSignIn.signOut();
+  }
+
+  googleCheckUser(){
+    print(googleSignIn.currentUser);
   }
 
 
 
   loginGoogle() async{
-    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
 
     try{
       GoogleSignInAccount? googleSignInAcount = await googleSignIn.signIn();
       print(googleSignInAcount!.email);
       print(googleSignInAcount.displayName);
       print(googleSignInAcount.photoUrl);
-      
+
       if(googleSignInAcount == null){
-        return ;
+        return;
       }
 
       GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAcount.authentication;
-      print(googleSignInAuthentication);
+
+      print(googleSignInAuthentication.accessToken);
+      print(googleSignInAuthentication.idToken);
+
 
     }catch (e){
       print(e);
@@ -78,6 +85,22 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 50.0,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 50.0,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        googleCheckUser();
+                      },
+                      child: Text(
+                        "Check User",
+                      ),
+                    ),
+                  ),
+                  
                 ],
               )
             ),
