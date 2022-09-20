@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant2/pages/admin/login_admin_page.dart';
 import 'package:restaurant2/pages/admin/home_admin_page.dart';
+import 'package:restaurant2/pages/customer/login_customer_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async{
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           fontFamily: 'Source Sans Pro Regular'
       ),
-      home: CheckUserLogin(),
+      home: LoginCustomerPage(),
     );
   }
 }
