@@ -58,8 +58,32 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
       
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeCustomerPage()), (route) => false);
 
-    }catch (e){
-      print(e);
+    }on FirebaseAuthException catch (e){
+
+      String error = "";
+      switch (e.code){
+        case "ERROR_INVALID_EMAIL":
+          error = "mensaje 1";
+          break;
+        case "ERROR_WRONG_PASSWORD":
+          error = "mensaje 1";
+          break;
+        case "ERROR_USER_NOT_FOUND":
+          error = "mensaje 3";
+          break;
+        case "ERROR_USER_DISABLED":
+          error = "mensaje 1";
+          break;
+        case "ERROR_TOO_MANY_REQUEST":
+          error = "mensaje 1";
+          break;
+        case "ERROR_OPERATION_NOT_ALLOWED":
+          error = "mensaje 1";
+          break;
+        default:
+          error = "El error es raro....";
+      }
+      print(error);
     }
 }
 
