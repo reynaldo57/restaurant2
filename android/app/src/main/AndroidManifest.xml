@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.restaurant2">
-   <application
+
+
+
+
+    <application
         android:label="restaurant2"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -30,5 +34,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-    </application>
+
+
+
+</application>
 </manifest>
