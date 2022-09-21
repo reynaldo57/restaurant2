@@ -1,8 +1,10 @@
 
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:restaurant2/pages/customer/home_customer_page.dart';
 
 class LoginCustomerPage extends StatefulWidget {
 
@@ -47,7 +49,14 @@ class _LoginCustomerPageState extends State<LoginCustomerPage> {
       );
 
       UserCredential user = await FirebaseAuth.instance.signInWithCredential(credential);
-      print(user);
+
+      await FirebaseFirestore.instance.collection('users').add({
+        "email": googleSignInAcount.email,
+        "imageUrl": googleSignInAcount.displayName,
+        "name": googleSignInAcount.displayName,
+      });
+      
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomeCustomerPage()), (route) => false);
 
     }catch (e){
       print(e);
